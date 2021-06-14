@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  study:
+    image: mysql:5.7
+    container_name: oauth2study
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=tiger
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=tiger
+      - MYSQL_DATABASE=oauth2
+      - TZ=UTC
+    volumes:
+      - ./src/main/resources/db/V1__init.sql:/docker-entrypoint-initdb.d/V1__init.sql
+      - /var/lib/mysql
+    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--max_allowed_packet=1073741824' ]
+
+volumes:
+  pland:
