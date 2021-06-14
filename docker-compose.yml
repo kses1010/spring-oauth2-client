@@ -15,8 +15,8 @@ services:
       - MYSQL_DATABASE=oauth2
       - TZ=UTC
     volumes:
-      - ./src/main/resources/db/V1__init.sql:/docker-entrypoint-initdb.d/V1__init.sql
-      - /var/lib/mysql
+      - ./src/main/resources/db/migration/V1__init.sql:/docker-entrypoint-initdb.d/V1__init.sql
+      - oauth2:/var/lib/mysql
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--max_allowed_packet=1073741824' ]
 
 volumes:
