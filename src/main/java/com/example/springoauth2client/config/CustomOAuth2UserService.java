@@ -1,5 +1,7 @@
 package com.example.springoauth2client.config;
 
+import com.example.springoauth2client.oauth.KakaoOAuth2User;
+import com.example.springoauth2client.oauth.OAuthAttributes;
 import com.example.springoauth2client.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -20,20 +22,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         ClientRegistration clientRegistration = userRequest.getClientRegistration();
+
         String registrationId = clientRegistration.getRegistrationId();
-        String userNameAttributeName = clientRegistration
-                .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        String userNameAttributeName = clientRegistration.getProviderDetails()
+                .getUserInfoEndpoint().getUserNameAttributeName();
 
-        return oAuth2User;
+        OAuthAttributes attributes = OAuthAttributes.from(oAuth2User);
+        KakaoOAuth2User kakaoOAuth2User = KakaoOAuth2User.from(attributes);
+
+        return kakaoOAuth2User;
     }
-
-//    private Account saveOrUpdate(OAuthAttributes attributes) {
-//        Account account = accountRepository.findByEmail(attributes.getEmail())
-//                .map(authAccount -> authAccount.updateProfile(attributes))
-//                .orElseGet(() -> Account.from(attributes));
-//
-//        return accountRepository.save(account);
-//    }
 }
