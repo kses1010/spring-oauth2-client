@@ -1,7 +1,6 @@
 package com.example.springoauth2client.oauth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -22,19 +21,6 @@ public class KakaoOAuth2User implements OAuth2User {
     private Map<String, Object> kakaoAccount = new HashMap<>();
 
     private Map<String, Object> properties = new HashMap<>();
-
-    @Builder
-    public KakaoOAuth2User(List<GrantedAuthority> authorities, String id,
-                           Map<String, Object> kakaoAccount, Map<String, Object> properties) {
-        this.authorities = authorities;
-        this.id = id;
-        this.kakaoAccount = kakaoAccount;
-        this.properties = properties;
-    }
-
-    public static KakaoOAuth2User of() {
-
-    }
 
     @Override
     public Map<String, Object> getAttributes() {
