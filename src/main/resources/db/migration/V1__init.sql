@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS account;
+
 CREATE TABLE account
 (
     id    BIGINT(30)                              NOT NULL AUTO_INCREMENT,
